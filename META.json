@@ -1,0 +1,56 @@
+{
+   "abstract" : "Parse a Carp stack trace into an array of caller information, while redacting sensitive function parameters out.",
+   "author" : [
+      "Guillaume Aubert <aubertg@cpan.org>",
+      "Kate Kirby <kate@cpan.org>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4, CPAN::Meta::Converter version 2.113640",
+   "license" : [
+      "artistic_1"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Carp-Parse-Redact",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Carp" : 0,
+            "Carp::Parse" : 0,
+            "Data::Dump" : 0,
+            "Test::Deep" : 0,
+            "Test::Exception" : 0,
+            "Test::More" : 0
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.4"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "perl" : "5.006"
+         }
+      }
+   },
+   "provides" : {
+      "Carp::Parse::CallerInformation::Redacted" : {
+         "file" : "lib/Carp/Parse/CallerInformation/Redacted.pm",
+         "version" : "v1.0.0"
+      },
+      "Carp::Parse::Redact" : {
+         "file" : "lib/Carp/Parse/Redact.pm",
+         "version" : "v1.0.0"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://opensource.org/licenses/artistic-license.php"
+      ]
+   },
+   "version" : "v1.0.0"
+}
