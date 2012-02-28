@@ -1,4 +1,7 @@
 Revision history for Carp-Parse-Redact
 
+1.0.1   02/28/2012
+        Syncing up CPAN::Meta::Converter versions with coauthor.
+
 1.0.0   02/28/2012
         First public release.
