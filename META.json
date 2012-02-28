@@ -5,7 +5,7 @@
       "Kate Kirby <kate@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4, CPAN::Meta::Converter version 2.113640",
+   "generated_by" : "Module::Build version 0.4, CPAN::Meta::Converter version 2.120530",
    "license" : [
       "artistic_1"
    ],
@@ -17,12 +17,12 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Carp" : 0,
-            "Carp::Parse" : 0,
-            "Data::Dump" : 0,
-            "Test::Deep" : 0,
-            "Test::Exception" : 0,
-            "Test::More" : 0
+            "Carp" : "0",
+            "Carp::Parse" : "0",
+            "Data::Dump" : "0",
+            "Test::Deep" : "0",
+            "Test::Exception" : "0",
+            "Test::More" : "0"
          }
       },
       "configure" : {
