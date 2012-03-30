@@ -1,5 +1,8 @@
 Revision history for Carp-Parse-Redact
 
+1.1.0   03/30/2012
+        Added feature to redact using regexes.
+
 1.0.1   02/28/2012
         Syncing up CPAN::Meta::Converter versions with coauthor.
 
