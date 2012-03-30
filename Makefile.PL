@@ -3,21 +3,22 @@ require 5.006;
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-  'test' => {
-              'TESTS' => 't/*.t t/CallerInformation-Redacted/*.t'
-            },
-  'PL_FILES' => {},
-  'INSTALLDIRS' => 'site',
-  'NAME' => 'Carp::Parse::Redact',
-  'EXE_FILES' => [],
-  'VERSION_FROM' => 'lib/Carp/Parse/Redact.pm',
-  'PREREQ_PM' => {
-                   'Test::More' => 0,
-                   'Test::Exception' => 0,
-                   'Data::Dump' => 0,
-                   'Carp::Parse' => 0,
-                   'Test::Deep' => 0,
-                   'Carp' => 0
-                 }
-)
+          'NAME' => 'Carp::Parse::Redact',
+          'VERSION_FROM' => 'lib/Carp/Parse/Redact.pm',
+          'PREREQ_PM' => {
+                           'Carp' => 0,
+                           'Carp::Parse' => 0,
+                           'Data::Dump' => 0,
+                           'Data::Validate::Type' => 0,
+                           'Test::Deep' => 0,
+                           'Test::Exception' => 0,
+                           'Test::More' => 0
+                         },
+          'INSTALLDIRS' => 'site',
+          'EXE_FILES' => [],
+          'PL_FILES' => {},
+          'test' => {
+                      'TESTS' => 't/*.t t/CallerInformation-Redacted/*.t'
+                    }
+        )
 ;

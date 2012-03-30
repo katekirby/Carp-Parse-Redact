@@ -14,12 +14,13 @@ my $builder = Module::Build->new(
 	dist_version_from    => 'lib/Carp/Parse/Redact.pm',
 	build_requires       =>
 	{
-		'Carp'            => 0,
-		'Carp::Parse'     => 0,
-		'Data::Dump'      => 0,
-		'Test::Deep'      => 0,
-		'Test::Exception' => 0,
-		'Test::More'      => 0,
+		'Carp'                 => 0,
+		'Carp::Parse'          => 0,
+		'Data::Dump'           => 0,
+		'Test::Deep'           => 0,
+		'Test::Exception'      => 0,
+		'Test::More'           => 0,
+		'Data::Validate::Type' => 0,
 	},
 	requires             =>
 	{
