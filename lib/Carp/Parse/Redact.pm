@@ -6,6 +6,7 @@ use strict;
 use Carp;
 use Carp::Parse;
 use Carp::Parse::CallerInformation::Redacted;
+use Data::Validate::Type;
 
 
 =head1 NAME
@@ -29,7 +30,9 @@ Version 1.0.1
 our $VERSION = '1.0.1';
 
 
-=head1 ARGUMENTS REDACTED BY DEFAULT
+=head1 DEFAULTS FOR REDACTING SENSITIVE DATA
+
+=head2 Redacting using hash keys
 
 By default, this module will redact values for which the argument name is:
 
@@ -64,6 +67,55 @@ my $DEFAULT_ARGUMENTS_REDACTED =
 ];
 
 
+=head2 Redacting using regular expressions
+
+By default, this module will redact subroutine arguments in the stack traces
+that match the following patterns:
+
+=over 4
+
+=item * Credit card numbers (VISA, MasterCard, American Express, Diners Club, Discover, JCB)
+
+=back
+
+=cut
+
+my $DEFAULT_REGEXP_REDACTED =
+[
+	# Credit card patterns.
+	qr/
+		\b
+			(?:
+				# VISA starts with 4         and has 13 or 16 digits
+				4                            [0-9]{12}        (?:[0-9]{3})?
+			|
+				# MasterCard start with
+				# 51 through 55              and has 16 digits
+				5[1-5]                       [0-9]{14}
+			|
+				# American Express starts
+				# with 34 or 37              and has 15 digits
+				3[47]                        [0-9]{13}
+			|
+				# Diners Club starts with
+				# 300 through 305
+				# or 36 or 38                and has 14 digits in either case
+				3 (?:0[0-5]|[68][0-9])       [0-9]{11}
+			|
+				# Discover starts with
+				# 6011 or 65                 and has 16 digits
+				6 (?:011|5[0-9]{2})          [0-9]{12}
+			|
+				# JCB starts with
+				# 2131 or 1800               and has 15 digits
+				# or starts with 35          and has 16 digits
+				(?:2131|1800|35[0-9]{3})     [0-9]{11}
+			)
+		\b
+	/x,
+];
+
+
 =head1 SYNOPSIS
 
 	# Retrieve a Carp stack trace with longmess(). This is tedious, but you will
@@ -79,16 +131,20 @@ my $DEFAULT_ARGUMENTS_REDACTED =
 	# The call takes an optional list of arguments to redact, if you don't want
 	# to use the default.
 	use Carp::Parse::Redact;
-	my $parsed_stack_trace = Carp::Parse::Redact::parse_stack_trace(
+	my $redacted_parsed_stack_trace = Carp::Parse::Redact::parse_stack_trace(
 		$stack_trace,
-		sensitive_argument_names => #optional
+		sensitive_argument_names  => #optional
 		[
-			password
-			passwd
-			cc_number
-			cc_exp
-			ccv
+			'password',
+			'passwd',
+			'cc_number',
+			'cc_exp',
+			'ccv',
 		],
+		sensitive_regexp_patterns => #optional
+		[
+			qr/^\d{16}$/,
+		]
 	);
 	
 	use Data::Dump qw( dump );
@@ -108,6 +164,40 @@ C<Carp::Parse::CallerInformation::Redacted> objects and redact out the sensitive
 information from each function caller arguments.
 
 	my $redacted_parsed_stack_trace = Carp::Parse::Redact::parse_stack_trace( $stack_trace );
+	
+	my $redacted_parsed_stack_trace = Carp::Parse::Redact::parse_stack_trace(
+		$stack_trace,
+		sensitive_argument_names => #optional
+		[
+			password
+			passwd
+			cc_number
+			cc_exp
+			ccv
+		],
+		sensitive_regexp_patterns => #optional
+		[
+			qr/^\d{16}$/,
+		]
+	);
+
+The first argument, a stack trace, is required. Optional parameters:
+
+=over 4
+
+=item * sensitive_argument_names
+
+An arrayref of argument names to redact, when they are found in hashes of
+arguments in the stack trace. If not set, see the list of defaults used at the
+top of this documentation.
+
+=item * sensitive_regexp_patterns
+
+An arrayref of regular expressions. If an argument in the list of subroutine
+calls in the stack trace matches any of the patterns, it will be redacted.
+If not set, see the list of defaults used at the top of this documentation.
+
+=back
 
 =cut
 
@@ -116,9 +206,14 @@ sub parse_stack_trace
 	my ( $stack_trace, %args ) = @_;
 	
 	# Verify parameters.
-	my $sensitive_argument_names = delete( $args{'sensitive_argument_names'} );
+	my $sensitive_argument_names = delete( $args{'sensitive_argument_names'} ) || $DEFAULT_ARGUMENTS_REDACTED;
 	croak "'sensitive_argument_names' must be an arrayref"
-		if defined( $sensitive_argument_names ) && !UNIVERSAL::isa( $sensitive_argument_names, 'ARRAY' ); ## no critic (BuiltinFunctions::ProhibitUniversalIsa)
+		if !Data::Validate::Type::is_arrayref( $sensitive_argument_names );
+	
+	my $sensitive_regexp_patterns = delete( $args{'sensitive_regexp_patterns'} ) || $DEFAULT_REGEXP_REDACTED;
+	croak "'sensitive_regexp_patterns' must be an arrayref"
+		if !Data::Validate::Type::is_arrayref( $sensitive_regexp_patterns );
+	
 	croak "The following parameters are not supported: " . Data::Dump::dump( %args )
 		if scalar( keys %args ) != 0;
 	
@@ -126,16 +221,17 @@ sub parse_stack_trace
 	my $arguments_redacted =
 	{
 		map { $_ => 1 }
-		@{ $sensitive_argument_names || $DEFAULT_ARGUMENTS_REDACTED }
+		@$sensitive_argument_names
 	};
 	
 	# Get the parsed stack trace from Carp::Parse.
 	my $parsed_stack_trace = Carp::Parse::parse_stack_trace( $stack_trace );
 	
-	# Redact sensitive information here.
+	# Redact sensitive information.
 	my $redacted_parsed_stack_trace = [];
 	foreach my $caller_information ( @{ $parsed_stack_trace || [] } )
 	{
+		# Scan for hash keys matching our list of sensitive argument names.
 		my $redact_next = 0;
 		my $redacted_arguments_list = [];
 		foreach my $argument ( @{ $caller_information->get_arguments_list() || [] } )
@@ -150,6 +246,25 @@ sub parse_stack_trace
 				push( @$redacted_arguments_list, $argument );
 				$redact_next = 1 if defined( $argument ) && $arguments_redacted->{ $argument };
 			}
+		}
+		
+		# Scan all arguments against patterns to redact sensitive information
+		# that wouldn't have been passed in a hash.
+		foreach my $argument ( @$redacted_arguments_list )
+		{
+			next unless defined( $argument );
+			next if $argument eq '[redacted]';
+			
+			my $matches_pattern = 0;
+			foreach my $regexp ( @$DEFAULT_REGEXP_REDACTED )
+			{
+				next unless $argument =~ $regexp;
+				$matches_pattern = 1;
+				last;
+			}
+			
+			$argument = '[redacted]'
+				if $matches_pattern;
 		}
 		
 		push(
