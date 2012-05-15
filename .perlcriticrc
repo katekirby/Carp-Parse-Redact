@@ -13,3 +13,8 @@ minimum_regex_length_to_complain_about = 50
 
 # Allow complex regexs, as long as they're commented inside they can be long.
 [-RegularExpressions::ProhibitComplexRegexes]
+
+# Use only core PerlCritic policies.
+# This prevents tests from failing if the tester / installer has non-standard
+# additional PerlCritic policies.
+theme = core
