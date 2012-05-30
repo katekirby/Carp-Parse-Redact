@@ -1,5 +1,8 @@
 Revision history for Carp-Parse-Redact
 
+v1.1.1  05/30/2012
+        * Fixed formatting for function calls with only one argument.
+
 v1.1.0  03/30/2012
         * Added feature to redact using regexes.
 

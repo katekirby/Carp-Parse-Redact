@@ -40,11 +40,11 @@
    "provides" : {
       "Carp::Parse::CallerInformation::Redacted" : {
          "file" : "lib/Carp/Parse/CallerInformation/Redacted.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       },
       "Carp::Parse::Redact" : {
          "file" : "lib/Carp/Parse/Redact.pm",
-         "version" : "v1.1.0"
+         "version" : "v1.1.1"
       }
    },
    "release_status" : "stable",
@@ -53,5 +53,5 @@
          "http://opensource.org/licenses/artistic-license.php"
       ]
    },
-   "version" : "v1.1.0"
+   "version" : "v1.1.1"
 }
