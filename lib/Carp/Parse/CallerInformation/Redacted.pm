@@ -117,7 +117,14 @@ sub get_redacted_line
 	my $redacted_arguments_list = $self->get_redacted_arguments_list() || [];
 	my $arguments_string = $self->get_arguments_string();
 	
-	$line =~ s/\(\Q$arguments_string\E\)/Data::Dump::dump( @$redacted_arguments_list )/ex;
+	# Data::Dump::dump() is really nice except that it treats arrays with
+	# only one member as a string, so we need to make an exception for
+	# formatting in that case.
+	my $redacted_arguments_string = Data::Dump::dump( @$redacted_arguments_list );
+	$redacted_arguments_string = "($redacted_arguments_string)"
+		if scalar( @$redacted_arguments_list ) == 1;
+	
+	$line =~ s/\(\Q$arguments_string\E\)/$redacted_arguments_string/x;
 	
 	return $line
 }
