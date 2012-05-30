@@ -20,6 +20,7 @@ t/CallerInformation-Redacted/30-get_arguments_string.t
 t/CallerInformation-Redacted/40-get_arguments_list.t
 t/CallerInformation-Redacted/45-get_redacted_arguments_list.t
 t/CallerInformation-Redacted/50-get_redacted_line.t
+t/CallerInformation-Redacted/51-get_redacted_line-single_argument.t
 t/manifest.t
 t/module_versions.t
 t/perlcritic.t
