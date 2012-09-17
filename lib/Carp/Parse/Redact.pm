@@ -23,11 +23,11 @@ sensitive information contained in the function arguments for each caller.
 
 =head1 VERSION
 
-Version 1.1.1
+Version 1.1.2
 
 =cut
 
-our $VERSION = '1.1.1';
+our $VERSION = '1.1.2';
 
 
 =head1 DEFAULTS FOR REDACTING SENSITIVE DATA

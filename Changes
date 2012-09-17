@@ -1,4 +1,6 @@
 Revision history for Carp-Parse-Redact
+v1.1.2  09/17/2012
+        * Fixed issue with trying to redact undefined arguments.
 
 v1.1.1  05/30/2012
         * Fixed formatting for function calls with only one argument.
