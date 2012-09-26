@@ -5,7 +5,7 @@ use Module::Build;
 
 my $builder = Module::Build->new(
 	module_name          => 'Carp::Parse::Redact',
-	license              => 'artistic',
+	license              => 'GPL_3',
 	dist_author          =>
 	[
 		'Guillaume Aubert <aubertg@cpan.org>',
@@ -32,6 +32,15 @@ my $builder = Module::Build->new(
 	],
 	create_makefile_pl   => 'traditional',
 	recursive_test_files => 1,
+	meta_merge          =>
+	{
+		resources              =>
+		{
+			repository  => 'https://github.com/katekirby/Carp-Parse-Redact.git',
+			homepage    => 'https://metacpan.org/release/Carp-Parse-Redact',
+			bugtracker  => 'http://rt.cpan.org/NoAuth/ReportBug.html?Queue=carp-parse-redact',
+		},
+	},
 );
 
 $builder->create_build_script();

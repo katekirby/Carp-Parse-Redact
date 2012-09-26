@@ -1,15 +1,16 @@
 .perlcriticrc
 Build.PL
 Changes
-ignore.txt
-lib/Carp/Parse/Redact.pm
-lib/Carp/Parse/CallerInformation/Redacted.pm
-Makefile.PL
+LICENSE
 MANIFEST			This list of files
 MANIFEST.SKIP
 META.json
 META.yml
+Makefile.PL
 README
+ignore.txt
+lib/Carp/Parse/CallerInformation/Redacted.pm
+lib/Carp/Parse/Redact.pm
 t/00-load.t
 t/10-parse_stack_trace.t
 t/11-parse_stack_trace-regexp.t
@@ -24,5 +25,5 @@ t/CallerInformation-Redacted/51-get_redacted_line-single_argument.t
 t/manifest.t
 t/module_versions.t
 t/perlcritic.t
-t/pod.t
 t/pod-coverage.t
+t/pod.t
