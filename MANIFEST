@@ -14,6 +14,7 @@ lib/Carp/Parse/Redact.pm
 t/00-load.t
 t/10-parse_stack_trace.t
 t/11-parse_stack_trace-regexp.t
+t/12-parse_stack_trace-indentation.t
 t/CallerInformation-Redacted/00-load.t
 t/CallerInformation-Redacted/10-new.t
 t/CallerInformation-Redacted/20-get_line.t
