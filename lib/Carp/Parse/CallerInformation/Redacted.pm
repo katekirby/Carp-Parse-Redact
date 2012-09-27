@@ -127,6 +127,12 @@ sub get_redacted_line
 		$redacted_arguments_string = "($redacted_arguments_string)"
 			if scalar( @$redacted_arguments_list ) == 1;
 		
+		# Data::Dump::dump() may format the output on more than one line.
+		# We make sure that the indentation of the original line is carried
+		# here to the new lines.
+		my ( $indentation ) = $line =~ /^(\s*)/;
+		$redacted_arguments_string =~ s/(\r?\n)/$1$indentation/gs;
+		
 		$line =~ s/\(\Q$arguments_string\E\)/$redacted_arguments_string/x;
 	}
 	
