@@ -1,4 +1,9 @@
 Revision history for Carp-Parse-Redact
+
+v1.1.5  10/10/2012
+        Fixed dependencies.
+		Cleanup of build issues.
+
 v1.1.4  09/28/2012
         * Improved indentation for better readability (Thanks, G$!)
 		* Include referenced LICENSE file I forgot to git add.

@@ -40,11 +40,11 @@
    "provides" : {
       "Carp::Parse::CallerInformation::Redacted" : {
          "file" : "lib/Carp/Parse/CallerInformation/Redacted.pm",
-         "version" : "v1.1.4"
+         "version" : "v1.1.5"
       },
       "Carp::Parse::Redact" : {
          "file" : "lib/Carp/Parse/Redact.pm",
-         "version" : "v1.1.4"
+         "version" : "v1.1.5"
       }
    },
    "release_status" : "stable",
@@ -60,5 +60,5 @@
          "url" : "https://github.com/katekirby/Carp-Parse-Redact.git"
       }
    },
-   "version" : "v1.1.4"
+   "version" : "v1.1.5"
 }

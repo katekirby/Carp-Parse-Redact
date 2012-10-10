@@ -19,10 +19,10 @@ name: Carp-Parse-Redact
 provides:
   Carp::Parse::CallerInformation::Redacted:
     file: lib/Carp/Parse/CallerInformation/Redacted.pm
-    version: v1.1.4
+    version: v1.1.5
   Carp::Parse::Redact:
     file: lib/Carp/Parse/Redact.pm
-    version: v1.1.4
+    version: v1.1.5
 requires:
   Carp: 0
   Carp::Parse: 0
@@ -34,4 +34,4 @@ resources:
   homepage: https://metacpan.org/release/Carp-Parse-Redact
   license: http://www.gnu.org/licenses/gpl-3.0.txt
   repository: https://github.com/katekirby/Carp-Parse-Redact.git
-version: v1.1.4
+version: v1.1.5
