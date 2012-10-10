@@ -26,11 +26,11 @@ yourself, they will get created for you by C<Carp::Parse::Redact>.
 
 =head1 VERSION
 
-Version 1.1.3
+Version 1.1.4
 
 =cut
 
-our $VERSION = '1.1.3';
+our $VERSION = '1.1.4';
 
 
 =head1 SYNOPSIS
